@@ -1,0 +1,17 @@
+_target_: config_classes.ModelConfig
+
+path_to_output_model: 'models/model_k_neighbours_classifier.pkl'
+path_to_model_metric: 'models/metrics/k_neighbours_classifier.json'
+path_to_processed_data: 'data/processed/heart_cleveland_upload_train_processed_k_neighbours_classifier.csv'
+path_to_transformer: 'models/transformers/transformer_k_neighbours_classifier.pkl'
+
+preprocessing_params:
+  _target_: config_classes.PreprocessingConfig
+  process_categorical: True
+  process_continual: True
+
+train_params:
+  _target_: config_classes.TrainingParams
+  model_type: 'KNeighborsClassifier'
+  random_state: 18
+  grid_search: True

@@ -1,0 +1,33 @@
+_target_: config_classes.TrainConfig
+
+input_data_path: "data/raw/heart_cleveland_upload.csv"
+input_test_data_path: "data/test/heart_cleveland_upload_test_unlabeled.csv"
+
+defaults:
+  - _self_
+  - model: logistic_regression #k_neighbours_classifier
+
+
+train_test_split_params:
+  _target_: config_classes.TrainTestSplitConfig
+  test_size: 0.25
+  random_state: 18
+
+feature_details:
+  _target_: config_classes.FeatureConfig
+  categorical_features:
+    - "sex"
+    - "cp"
+    - "fbs"
+    - "restecg"
+    - "exang"
+    - "slope"
+    - "ca"
+    - "thal"
+  continual_features:
+    - "age"
+    - "trestbps"
+    - "chol"
+    - "thalach"
+    - "oldpeak"
+  target_column: "condition"
