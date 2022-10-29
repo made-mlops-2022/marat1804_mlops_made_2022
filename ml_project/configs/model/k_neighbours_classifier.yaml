@@ -2,7 +2,7 @@ _target_: config_classes.ModelConfig
 
 path_to_output_model: 'models/model_k_neighbours_classifier.pkl'
 path_to_model_metric: 'models/metrics/k_neighbours_classifier.json'
-path_to_processed_data: 'data/processed/heart_cleveland_upload_train_processed_k_neighbours_classifier.csv'
+path_to_processed_data: 'data/processed/heart_cleveland_upload_train_processed.csv'
 path_to_transformer: 'models/transformers/transformer_k_neighbours_classifier.pkl'
 
 preprocessing_params:

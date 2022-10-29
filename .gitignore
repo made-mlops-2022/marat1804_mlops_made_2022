@@ -135,3 +135,4 @@ outputs/
 # Saved models
 *.pkl
 *.csv
+*.json

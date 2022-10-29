@@ -37,10 +37,6 @@ class Classifier:
     def predict(self, X_test):
         return self.model.predict(X_test)
 
-    def save_model(self, path_to_model):
-        with open(path_to_model, 'wb') as f:
-            pickle.dump(self.model, f)
-
     def evaluate_model(self, y_pred, y):
         return {
             'accuracy': accuracy_score(y_pred, y),

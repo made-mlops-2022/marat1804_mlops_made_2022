@@ -5,7 +5,7 @@ input_test_data_path: "data/test/heart_cleveland_upload_test_unlabeled.csv"
 
 defaults:
   - _self_
-  - model: logistic_regression #k_neighbours_classifier
+  - model: logistic_regression #k_neighbours_classifier or logistic_regression
 
 
 train_test_split_params:

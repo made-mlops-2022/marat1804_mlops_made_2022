@@ -33,7 +33,3 @@ class CustomTransformer:
 
     def fit(self, data):
         self.transformer.fit(data)
-
-    def save_transformer(self, path_to_model):
-        with open(path_to_model, 'wb') as f:
-            pickle.dump(self.transformer, f)
