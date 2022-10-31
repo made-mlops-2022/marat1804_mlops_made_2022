@@ -17,12 +17,6 @@ jobs:
       with:
         python-version: "3.10"
 
-    - name: Setup dvc
-      run: |
-        pip install dvc
-        pip install dvc_gdrive
-        dvc pull
-
     - name: Install dependencies
       run: |
         cd ml_project
