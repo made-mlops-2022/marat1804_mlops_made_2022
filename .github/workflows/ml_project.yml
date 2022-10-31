@@ -25,5 +25,6 @@ jobs:
         pip install -r requirements.txt
 
     - name: Run tests
+     working-directory: ${{github.workspace}}/ml_project
       run: |
         python3 -m unittest tests/
