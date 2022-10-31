@@ -1,4 +1,3 @@
-import pickle
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import recall_score, f1_score, precision_score, accuracy_score, roc_auc_score
