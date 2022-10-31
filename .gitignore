@@ -132,6 +132,9 @@ dmypy.json
 # Logs
 outputs/
 
+# Stats
+*.png
+
 # Saved models
 *.pkl
 *.csv
