@@ -27,4 +27,4 @@ jobs:
     - name: Run tests
       working-directory: ${{github.workspace}}/ml_project
       run: |
-        python3 -m unittest tests/
+        python3 -m unittest tests
