@@ -20,6 +20,7 @@ jobs:
     - name: Setup dvc
       run: |
         pip install dvc
+        pip install dvc_gdrive
         dvc pull
 
     - name: Install dependencies
@@ -28,7 +29,7 @@ jobs:
         python3 -m pip install --upgrade pip
         pip install flake8
         pip install -r requirements.txt
-        
+
     - name: Run tests
       run: |
         python3 -m unittest tests/
