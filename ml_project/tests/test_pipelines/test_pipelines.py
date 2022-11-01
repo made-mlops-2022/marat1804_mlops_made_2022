@@ -51,7 +51,7 @@ class TestTrainAndPredictPipeline(unittest.TestCase):
 
         with open(params.model.path_to_model_metric, 'r') as file:
             metrics = json.load(file)
-        self.assertIn('f1_val', metrics)
+        self.assertIn('recall_val', metrics)
         self.assertIn('accuracy', metrics)
         self.assertIn('recall', metrics)
         self.assertIn('precision', metrics)

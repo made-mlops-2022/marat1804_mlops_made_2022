@@ -24,12 +24,12 @@ class Classifier:
 
     def fit(self, X_train, y_train):
         if self.train_params.grid_search:
-            model_grid_search = GridSearchCV(self.model, self.param_grid, scoring='f1', cv=5)
+            model_grid_search = GridSearchCV(self.model, self.param_grid, scoring='recall', cv=5)
             model_grid_search.fit(X_train, y_train)
 
             self.model = model_grid_search.best_estimator_
             self.model_best_params = model_grid_search.best_params_
-            self.model_best_score_ = {'f1_val': model_grid_search.best_score_}
+            self.model_best_score_ = {'recall_val': model_grid_search.best_score_}
         else:
             self.model.fit(X_train, y_train)
 

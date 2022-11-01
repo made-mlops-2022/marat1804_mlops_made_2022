@@ -47,7 +47,7 @@ class TestClassifierModel(unittest.TestCase):
         X_train = self.transformer.transform(self.X_train)
         X_test = self.transformer.transform(self.X_test)
         model.fit(X_train, self.y_train)
-        self.assertIn('f1_val', model.model_best_score_)
+        self.assertIn('recall_val', model.model_best_score_)
         y_pred = model.predict(X_test)
         self.assertEqual(y_pred.shape, (38,))
         metrics = model.evaluate_model(self.y_test, y_pred)
