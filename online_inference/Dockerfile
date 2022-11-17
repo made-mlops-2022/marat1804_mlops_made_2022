@@ -1,7 +1,7 @@
 FROM python:3.9.15-slim-bullseye
 RUN python3 -m pip install --upgrade pip
 
-COPY main.py schemas.py start.sh requirements.txt ./app/
+COPY main.py schemas.py start.sh requirements.txt test_app.py ./app/
 
 WORKDIR /app
 
