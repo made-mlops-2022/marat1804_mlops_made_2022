@@ -32,4 +32,4 @@ pytest
 
 And the result is:
 
-![img.png](img.png)
+![img.png](1.png)
