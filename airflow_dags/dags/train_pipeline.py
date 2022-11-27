@@ -52,3 +52,26 @@ with DAG(
         auto_remove='true',
         mounts=[Mount(source=LOCAL_DIR, target='/data', type='bind')]
     )
+
+    train_model = DockerOperator(
+        image='airflow-train-model',
+        command='--input-dir /data/split/{{ ds }} --output-dir /data/models/{{ ds }}',
+        network_mode="bridge",
+        task_id="docker-operator-train-model",
+        do_xcom_push=False,
+        auto_remove='true',
+        mounts=[Mount(source=LOCAL_DIR, target='/data', type='bind')]
+    )
+
+    validate_model = DockerOperator(
+        image='airflow-validate-model',
+        command='--input-dir /data/split/{{ ds }} --model-dir /data/models/{{ ds }} '
+                '--output-dir /data/metrics/{{ ds }}',
+        network_mode="bridge",
+        task_id="docker-operator-validate-model",
+        do_xcom_push=False,
+        auto_remove='true',
+        mounts=[Mount(source=LOCAL_DIR, target='/data', type='bind')]
+    )
+
+    [wait_for_target, wait_for_data] >> preprocess_data >> train_test_split >> train_model >> validate_model

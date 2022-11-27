@@ -6,7 +6,6 @@ from airflow.models import Variable
 
 
 LOCAL_DIR = Variable.get('local_dir')
-LOCAL_MODEL_DIR = Variable.get('local_model_dir')
 
 
 def check_file(filename):
