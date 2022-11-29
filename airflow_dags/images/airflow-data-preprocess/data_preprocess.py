@@ -32,8 +32,7 @@ def data_preprocess(input_dir, output_dir):
     transformer.fit(df)
     X = transformer.transform(df)
     processed_data = pd.DataFrame(X)
-    processed_data.to_csv(os.path.join(output_dir, 'train_data.csv'),
-                          index=False, sep=',', encoding='utf-8')
+    processed_data.to_csv(os.path.join(output_dir, 'train_data.csv'), index=False)
 
     shutil.copyfile(os.path.join(input_dir, 'target.csv'),
                     os.path.join(output_dir, 'target.csv'))

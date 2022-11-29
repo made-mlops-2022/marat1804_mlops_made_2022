@@ -7,6 +7,15 @@ from docker.types import Mount
 from common import LOCAL_DIR, default_args, check_file
 
 
+AIRFLOW_RAW_DATA_PATH = "/opt/airflow/data/raw/{{ ds }}"
+HOST_RAW_DATA_PATH = "/data/raw/{{ ds }}"
+HOST_PROCESSED_DATA_PATH = "/data/processed/{{ ds }}"
+HOST_SPLITTED_DATA_PATH = "/data/splitted/{{ ds }}"
+HOST_PREDICTIONS_PATH = "/data/predictions/{{ ds }}"
+HOST_MODELS_PATH = "/data/models/{{ ds }}"
+HOST_METRICS_PATH = "/data/metrics/{{ ds }}"
+
+
 with DAG(
     'train_pipeline',
     default_args=default_args,
@@ -16,8 +25,8 @@ with DAG(
     wait_for_data = PythonSensor(
         task_id='wait-for-data',
         python_callable=check_file,
-        op_args=['/opt/airflow/data/raw/{{ ds }}/data.csv'],
-        timeout=60,
+        op_args=[f'{AIRFLOW_RAW_DATA_PATH}/data.csv'],
+        timeout=600,
         poke_interval=10,
         retries=20,
         mode='poke'
@@ -26,8 +35,8 @@ with DAG(
     wait_for_target = PythonSensor(
         task_id='wait-for-target',
         python_callable=check_file,
-        op_args=['/opt/airflow/data/raw/{{ ds }}/target.csv'],
-        timeout=60,
+        op_args=[f'{AIRFLOW_RAW_DATA_PATH}/target.csv'],
+        timeout=600,
         poke_interval=10,
         retries=20,
         mode='poke'
@@ -35,7 +44,7 @@ with DAG(
 
     preprocess_data = DockerOperator(
         image='airflow-data-preprocess',
-        command='--input-dir /data/raw/{{ ds }} --output-dir /data/preprocessed/{{ ds }}',
+        command=f'--input-dir {HOST_RAW_DATA_PATH} --output-dir {HOST_PROCESSED_DATA_PATH}',
         network_mode="bridge",
         task_id="docker-operator-data-preprocess",
         do_xcom_push=False,
@@ -45,7 +54,7 @@ with DAG(
 
     train_test_split = DockerOperator(
         image='airflow-train-test-split',
-        command='--input-dir /data/preprocessed/{{ ds }} --output-dir /data/split/{{ ds }}',
+        command=f'--input-dir {HOST_PROCESSED_DATA_PATH} --output-dir {HOST_SPLITTED_DATA_PATH}',
         network_mode="bridge",
         task_id="docker-operator-train-test-split",
         do_xcom_push=False,
@@ -55,7 +64,7 @@ with DAG(
 
     train_model = DockerOperator(
         image='airflow-train-model',
-        command='--input-dir /data/split/{{ ds }} --output-dir /data/models/{{ ds }}',
+        command=f'--input-dir {HOST_SPLITTED_DATA_PATH} --output-dir {HOST_MODELS_PATH}',
         network_mode="bridge",
         task_id="docker-operator-train-model",
         do_xcom_push=False,
@@ -65,8 +74,8 @@ with DAG(
 
     validate_model = DockerOperator(
         image='airflow-validate-model',
-        command='--input-dir /data/split/{{ ds }} --model-dir /data/models/{{ ds }} '
-                '--output-dir /data/metrics/{{ ds }}',
+        command=f'--input-dir {HOST_SPLITTED_DATA_PATH} --model-dir {HOST_MODELS_PATH} '
+                f'--output-dir {HOST_METRICS_PATH}',
         network_mode="bridge",
         task_id="docker-operator-validate-model",
         do_xcom_push=False,

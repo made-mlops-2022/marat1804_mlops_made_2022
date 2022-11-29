@@ -5,7 +5,8 @@ from airflow.utils.email import send_email
 from airflow.models import Variable
 
 
-LOCAL_DIR = Variable.get('local_dir')
+LOCAL_DIR = Variable.get('LOCAL_DIR')
+MODEL_DIR = Variable.get('MODEL_DIR')
 
 
 def check_file(filename):
