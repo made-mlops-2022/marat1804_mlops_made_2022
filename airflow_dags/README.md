@@ -14,5 +14,10 @@ To choose model in predict_pipeline you should go to Admin -> Variables
 add the variable with name model and value that is the date of any train DAG in YYYY-MM-DD format.
 
 
-
+### To run simple tests on dags load and structure
+```
+docker exec -it airflow_dags_scheduler-1 bash
+pip3 install pytest
+python3 -m pytest --disable-warnings tests
+```
 
