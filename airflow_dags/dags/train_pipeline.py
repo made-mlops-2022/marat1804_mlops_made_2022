@@ -20,14 +20,14 @@ with DAG(
     'train_pipeline',
     default_args=default_args,
     schedule_interval='@weekly',
-    start_date=datetime(2022, 11, 22)
+    start_date=datetime(2022, 11, 5)
 ) as dag:
     wait_for_data = PythonSensor(
         task_id='wait-for-data',
         python_callable=check_file,
         op_args=[f'{AIRFLOW_RAW_DATA_PATH}/data.csv'],
-        timeout=600,
-        poke_interval=10,
+        timeout=6000,
+        poke_interval=60,
         retries=20,
         mode='poke'
     )
@@ -37,7 +37,7 @@ with DAG(
         python_callable=check_file,
         op_args=[f'{AIRFLOW_RAW_DATA_PATH}/target.csv'],
         timeout=600,
-        poke_interval=10,
+        poke_interval=60,
         retries=20,
         mode='poke'
     )

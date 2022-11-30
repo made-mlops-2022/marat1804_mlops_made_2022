@@ -11,11 +11,11 @@ INPUT_DATA = 'input_data.csv'
 
 
 @click.command('generate')
-@click.option('--output', type=click.Path(),
+@click.option('--output-dir', type=click.Path(),
               help='Path to output files')
-def generate_data(output):
-    os.makedirs(output, exist_ok=True)
-    input_data = os.path.join(output, INPUT_DATA)
+def generate_data(output_dir):
+    os.makedirs(output_dir, exist_ok=True)
+    input_data = os.path.join(output_dir, INPUT_DATA)
     generate_new_data(input_data)
 
     data = pd.read_csv(input_data)
@@ -23,8 +23,8 @@ def generate_data(output):
     X = data.drop(target_column, axis=1)
     y = data[target_column]
 
-    X.to_csv(os.path.join(output, 'data.csv'), index=False)
-    y.to_csv(os.path.join(output, 'target.csv'), index=False)
+    X.to_csv(os.path.join(output_dir, 'data.csv'), index=False)
+    y.to_csv(os.path.join(output_dir, 'target.csv'), index=False)
     os.remove(input_data)
 
 

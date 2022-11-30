@@ -11,7 +11,7 @@ with DAG(
     'data_generation',
     default_args=default_args,
     schedule_interval='@daily',
-    start_date=datetime(2022, 11, 22)
+    start_date=datetime(2022, 11, 5)
 ) as dag:
     t1 = BashOperator(task_id="print_date", bash_command="date")
     t2 = DockerOperator(
